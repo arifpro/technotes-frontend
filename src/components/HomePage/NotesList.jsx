@@ -4,7 +4,7 @@ import MaterialTable from 'material-table';
 import { forwardRef, useState } from 'react';
 import styles from '../../styles/NotesListStyles.module.scss';
 import CustomModal from './CustomModal';
-import CustomSlateEditor from './CustomSlateEditor';
+import AddNote from './AddNote';
 
 // eslint-disable-next-line no-unused-vars
 const tableIcons = {
@@ -31,18 +31,14 @@ const NotesList = () => {
                 <MaterialTable
                     title="Basic Export Preview"
                     columns={[
-                        { title: 'Name', field: 'name' },
-                        { title: 'Surname', field: 'surname' },
-                        { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-                        {
-                            title: 'Birth Place',
-                            field: 'birthCity',
-                            lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-                        },
+                        { title: '#', field: 'no' },
+                        { title: 'Note', field: 'note' },
+                        { title: 'Date', field: 'date' },
                     ]}
                     data={[
-                        { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-                        { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
+                        { no: '1', note: 'lorem...', date: '12-30-2021' },
+                        { no: '2', note: 'lorem...', date: '12-30-2021' },
+                        { no: '3', note: 'lorem...', date: '12-30-2021' },
                     ]}
                     options={{
                         exportButton: true,
@@ -79,16 +75,8 @@ const NotesList = () => {
             </div>
 
             <CustomModal open={open} handleClose={handleClose}>
-                {/* <AddNote /> */}
-                <main
-                    style={{
-                        maxWidth: '600px',
-                        // background: 'white',
-                        // borderRadius: '19px',
-                        // boxShadow: '2px 1px 8px rgba(0, 0, 0, 0.1)',
-                    }}
-                >
-                    <CustomSlateEditor />
+                <main style={{ maxWidth: '600px' }}>
+                    <AddNote editable={false} />
                 </main>
             </CustomModal>
         </>

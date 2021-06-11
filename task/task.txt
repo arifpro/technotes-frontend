@@ -17,3 +17,7 @@ If you are participating in this test, please let us know by replying to this em
  
 All the best. HR Department, 
 TechCare Inc. 
+
+
+# API documentation
+https://documenter.getpostman.com/view/10908753/TzeTH8yB
