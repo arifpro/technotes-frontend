@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
+// eslint-disable-next-line no-unused-vars
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
@@ -11,14 +12,18 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        // backgroundColor: theme.palette.background.paper,
+        // border: '2px solid #000',
+        // boxShadow: theme.shadows[5],
+        // padding: theme.spacing(2, 4, 3),
+
+        background: 'white',
+        borderRadius: '19px',
+        boxShadow: '2px 1px 8px rgba(0, 0, 0, 0.1)',
     },
 }));
 
-export default function CustomModal({ open, handleClose }) {
+export default function CustomModal({ open, handleClose, children }) {
     const classes = useStyles();
 
     return (
@@ -36,10 +41,7 @@ export default function CustomModal({ open, handleClose }) {
                 }}
             >
                 <Fade in={open}>
-                    <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Transition modal</h2>
-                        <p id="transition-modal-description">react-transition-group animates me.</p>
-                    </div>
+                    <div className={classes.paper}>{children}</div>
                 </Fade>
             </Modal>
         </div>

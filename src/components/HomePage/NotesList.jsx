@@ -4,6 +4,7 @@ import MaterialTable from 'material-table';
 import { forwardRef, useState } from 'react';
 import styles from '../../styles/NotesListStyles.module.scss';
 import CustomModal from './CustomModal';
+import CustomSlateEditor from './CustomSlateEditor';
 
 // eslint-disable-next-line no-unused-vars
 const tableIcons = {
@@ -77,7 +78,19 @@ const NotesList = () => {
                 />
             </div>
 
-            <CustomModal open={open} handleClose={handleClose} />
+            <CustomModal open={open} handleClose={handleClose}>
+                {/* <AddNote /> */}
+                <main
+                    style={{
+                        maxWidth: '600px',
+                        // background: 'white',
+                        // borderRadius: '19px',
+                        // boxShadow: '2px 1px 8px rgba(0, 0, 0, 0.1)',
+                    }}
+                >
+                    <CustomSlateEditor />
+                </main>
+            </CustomModal>
         </>
     );
 };
