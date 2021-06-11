@@ -1,0 +1,23 @@
+Hello Arif, 
+
+We're delighted to inform you that you’ve been shortlisted for the 2nd round of our hiring process for “React Developer” in TechCare. To qualify for the final round, a small coding test is required. 
+
+Please check the PDF file attached below. We’ve given full details and instructions about the task in this pdf and also a list of API documents. Read these details carefully and if you have any questions, feel free to contact us. 
+ 
+We expect the followings from you: 
+ * GitHub/Bitbucket link for your code.
+ * Share a repository link containing a clean README.md file, where you explain how to replicate your codebase into our system and test accordingly. Also please be specific about how we can run, debug or replicate with your codes in our hands.
+ * Bonus - After completion, you can deploy this application to Heroku in their free tier quota to showcase your project.
+
+All these 3 will be the deliverables over email. Please add that to this email. 
+
+Task Submission Deadline: 11th June 2021 within 11 PM. (BD Time) 
+ 
+If you are participating in this test, please let us know by replying to this email. So that we can expect your submission. We’re looking forward to your great work.
+ 
+All the best. HR Department, 
+TechCare Inc. 
+
+
+# API documentation
+https://documenter.getpostman.com/view/10908753/TzeTH8yB

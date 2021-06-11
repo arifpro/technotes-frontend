@@ -1,8 +1,7 @@
+/* eslint-disable import/no-cycle */
 import { Link, NavLink } from 'react-router-dom';
-
 // images
 import logo from '../../assets/logo.png';
-
 // styles
 import styles from '../../styles/NavbarStyles.module.scss';
 

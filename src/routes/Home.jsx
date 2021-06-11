@@ -1,4 +1,5 @@
-import Info from '../components/HomePage/Info';
+// import Info from '../components/HomePage/Info';
+import NotesList from '../components/HomePage/NotesList';
 import Layout from '../components/Layout';
 
 const Home = () => {
@@ -7,7 +8,8 @@ const Home = () => {
     return (
         <Layout title="Home">
             <h1>{name} page</h1>
-            <Info />
+            <NotesList />
+            {/* <Info /> */}
         </Layout>
     );
 };
