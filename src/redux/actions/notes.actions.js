@@ -33,25 +33,25 @@ const getAllNotes = () => async (dispatch) => {
 const getNoteDetailsById = (id) => async (dispatch) => {
     try {
         dispatch({
-            type: notesConstants.GET_NOTE__DETAILS_BY_ID_REQUEST,
+            type: notesConstants.GET_NOTE_DETAILS_BY_ID_REQUEST,
         });
 
         const res = await api.get(`/note/${id}`);
 
         if (res.status === 200) {
             dispatch({
-                type: notesConstants.GET_NOTE__DETAILS_BY_ID_SUCCESS,
+                type: notesConstants.GET_NOTE_DETAILS_BY_ID_SUCCESS,
                 payload: res.data,
             });
         } else {
             dispatch({
-                type: notesConstants.GET_NOTE__DETAILS_BY_ID_FAILED,
+                type: notesConstants.GET_NOTE_DETAILS_BY_ID_FAILED,
                 error: 'unable to get note details by given id',
             });
         }
     } catch (e) {
         dispatch({
-            type: notesConstants.GET_NOTE__DETAILS_BY_ID_FAILED,
+            type: notesConstants.GET_NOTE_DETAILS_BY_ID_FAILED,
             error: e,
         });
     }
@@ -93,7 +93,7 @@ const createNote = (data) => async (dispatch) => {
 const updateNoteById = (data) => async (dispatch) => {
     try {
         dispatch({
-            type: notesConstants.UPDATE_PRODUCT_REQUEST,
+            type: notesConstants.UPDATE_NOTE_BY_ID_REQUEST,
         });
 
         const { id, title, details } = data;
@@ -103,19 +103,19 @@ const updateNoteById = (data) => async (dispatch) => {
 
         if (res.status === 200) {
             dispatch({
-                type: notesConstants.UPDATE_PRODUCT_SUCCESS,
+                type: notesConstants.UPDATE_NOTE_BY_ID_SUCCESS,
                 payload: res.data,
             });
             // dispatch(getAllNotes());
         } else {
             dispatch({
-                type: notesConstants.UPDATE_PRODUCT_FAILED,
-                error: 'unable to update product data',
+                type: notesConstants.UPDATE_NOTE_BY_ID_FAILED,
+                error: 'unable to update note data',
             });
         }
     } catch (e) {
         dispatch({
-            type: notesConstants.UPDATE_PRODUCT_FAILED,
+            type: notesConstants.UPDATE_NOTE_BY_ID_FAILED,
             error: e,
         });
     }
@@ -125,26 +125,26 @@ const updateNoteById = (data) => async (dispatch) => {
 const deleteNoteById = (id) => async (dispatch) => {
     try {
         dispatch({
-            type: notesConstants.UPDATE_PRODUCT_REQUEST,
+            type: notesConstants.DELETE_NOTE_BY_ID_REQUEST,
         });
 
         const res = await api.put(`/note/${id}`);
 
         if (res.status === 200) {
             dispatch({
-                type: notesConstants.UPDATE_PRODUCT_SUCCESS,
-                payload: res.data,
+                type: notesConstants.DELETE_NOTE_BY_ID_SUCCESS,
+                payload: { ...res.data, id },
             });
             // dispatch(getAllNotes());
         } else {
             dispatch({
-                type: notesConstants.UPDATE_PRODUCT_FAILED,
-                error: 'unable to update product data',
+                type: notesConstants.DELETE_NOTE_BY_ID_FAILED,
+                error: 'unable to delete note data',
             });
         }
     } catch (e) {
         dispatch({
-            type: notesConstants.UPDATE_PRODUCT_FAILED,
+            type: notesConstants.DELETE_NOTE_BY_ID_FAILED,
             error: e,
         });
     }
