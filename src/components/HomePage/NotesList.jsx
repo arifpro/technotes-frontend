@@ -7,6 +7,7 @@ import { AddBox, Delete, Edit, Share, Visibility } from '@material-ui/icons';
 import MaterialTable from 'material-table';
 import { forwardRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Divider from '@material-ui/core/Divider';
 import { createNote, deleteNoteById, getNoteDetailsById, updateNoteById } from '../../redux/actions';
 import styles from '../../styles/NotesListStyles.module.scss';
 // import AddNote from './AddNote';
@@ -56,19 +57,10 @@ const NotesList = () => {
         dispatch(getNoteDetailsById(rowData?.id));
     };
 
-    // notes.notesData?.notes?.map(note )
-
-    //     notes: Array(2)
-    // 0:
-    // created: "2021-06-12 04:04:21.719552+00:00"
-    // details: "test details"
-    // id: 1
-    // last_edit: null
-    // title: "test title"
-
     return (
         <>
             <div className={styles.notesList}>
+                <h1>Notes List</h1>
                 <button
                     type="button"
                     style={{
@@ -106,12 +98,12 @@ const NotesList = () => {
                     //     { no: '2', title: 'lorem...', details: 'lorem...', date: '12-30-2021' },
                     //     { no: '3', title: 'lorem...', details: 'lorem...', date: '12-30-2021' },
                     // ]}
-                    data={notes.notesData?.notes?.map((note) => {
+                    data={notes.notesData?.notes?.map((note, i) => {
                         if (note.details.length > 10) {
-                            return { ...note, details: `${note.details.substring(0, 10)}...`, created: note.created.split(' ')[0] };
+                            return { ...note, details: `${note.details.substring(0, 10)}...`, created: note.created.split(' ')[0], no: i+1 };
                         }
 
-                        return {...note, created: note.created.split(' ')[0]};
+                        return {...note, created: note.created.split(' ')[0], no: i+1};
                     })}
                     options={{
                         exportButton: true,
@@ -170,6 +162,66 @@ const NotesList = () => {
                                 // console.log(rowData);
                                 setSelectedFormData(rowData);
                                 setFormType('Share');
+                                handleOpen(true);
+                            },
+                        },
+                    ]}
+                />
+            </div>
+
+
+            <Divider style={{ height: '2px', marginTop: '5rem' }} />
+
+
+            {/* shared list */}
+            <div className={styles.notesList}>
+                <h1 style={{marginBottom: '2rem'}}>Shared Notes List</h1>
+        
+
+                <MaterialTable
+                    title="Notes"
+                    tableIcons={tableIcons}
+                    columns={[
+                        { title: '#', field: 'no' },
+                        { title: 'Title', field: 'title' },
+                        { title: 'Details', field: 'details' },
+                        { title: 'Date', field: 'created' },
+                    ]}
+                    data={notes.notesData?.notes?.map((note, i) => {
+                        if (note.details.length > 10) {
+                            return { ...note, details: `${note.details.substring(0, 10)}...`, created: note.created.split(' ')[0], no: i+1 };
+                        }
+
+                        return {...note, created: note.created.split(' ')[0], no: i+1};
+                    })}
+                    options={{
+                        exportButton: true,
+                    }}
+                    actions={[
+                        {
+                            icon: () => (
+                                <div>
+                                    <Visibility htmlColor="#305cba" />
+                                </div>
+                            ),
+                            tooltip: 'Preview',
+                            onClick: (event, rowData) => {
+                                // console.log(rowData);
+                                setSelectedFormData(rowData);
+                                handleOpenView(true, rowData);
+                            },
+                        },
+                        {
+                            icon: () => (
+                                <div>
+                                    <Edit htmlColor="#305cba" />
+                                </div>
+                            ),
+                            tooltip: 'Preview',
+                            onClick: (event, rowData) => {
+                                // console.log(rowData);
+                                setSelectedFormData(rowData);
+                                setFormType('Update');
                                 handleOpen(true);
                             },
                         },

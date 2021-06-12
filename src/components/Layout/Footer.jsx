@@ -2,8 +2,17 @@ const Footer = () => {
     const year = new Date().getFullYear();
 
     return (
-        <main style={{ textAlign: 'center' }}>
-            <h1>Footer | {year}</h1>
+        <main
+            style={{
+                textAlign: 'center',
+                backgroundColor: '#3c444c',
+                padding: '10px 0',
+                color: '#bdbdbd',
+                borderTopLeftRadius: '15px',
+                borderTopRightRadius: '15px',
+            }}
+        >
+            <strong>{year} | All rights reserved</strong>
         </main>
     );
 };
