@@ -7,10 +7,12 @@ const InputNote = ({ onHandleSubmit, formType, selectedFormData }) => {
     const { control, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
-        onHandleSubmit(data);
+        if (selectedFormData) {
+            onHandleSubmit({ ...data, id: selectedFormData?.id });
+        } else {
+            onHandleSubmit(data);
+        }
     };
-
-    console.log(selectedFormData);
 
     return (
         <>
