@@ -8,11 +8,10 @@ const userJwtToken = (data) => async (dispatch) => {
             type: authConstants.AUTH_REQUEST,
         });
 
-        const { firstName, lastName, mail } = data;
         const user = {
-            first_name: firstName,
-            last_name: lastName,
-            mail,
+            first_name: data?.firstName || '',
+            last_name: data?.lastName || '',
+            mail: data?.mail,
         };
 
         const res = await api.post(`/auth`, user);
@@ -22,6 +21,9 @@ const userJwtToken = (data) => async (dispatch) => {
                 type: authConstants.AUTH_SUCCESS,
                 payload: res.data,
             });
+
+            localStorage.setItem('technotesUser', data?.mail);
+            localStorage.setItem('technotesJWT', res.data.jwt);
         } else {
             dispatch({
                 type: authConstants.AUTH_FAILED,
@@ -29,6 +31,16 @@ const userJwtToken = (data) => async (dispatch) => {
             });
         }
     } catch (e) {
+        // if (e === '') {
+        //     let token = '';
+
+        //     if (typeof window !== 'undefined') {
+        //         token = localStorage.getItem('technotesJWT');
+        //     }
+
+        //     console.log(token);
+        // }
+
         dispatch({
             type: authConstants.AUTH_FAILED,
             error: e,

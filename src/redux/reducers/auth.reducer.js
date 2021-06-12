@@ -11,6 +11,10 @@ const authReducer = (state = initialState, action) => {
     // console.log(action);
     console.log(action.payload);
 
+    if (action.payload?.error === 'Invalid or Expired JWT') {
+        localStorage.setItem('tokenError', 'Invalid or Expired JWT');
+    }
+
     switch (action.type) {
         // <===================> POST: userJwtToken <===================>
         case authConstants.AUTH_REQUEST:
