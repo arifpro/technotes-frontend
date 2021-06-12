@@ -70,11 +70,11 @@ const createNote = (data) => async (dispatch) => {
         const res = await api.post(`/note`, newNote);
 
         if (res.status === 200) {
-            dispatch({
-                type: notesConstants.CREATE_NOTE_SUCCESS,
-                payload: res.data,
-            });
-            // dispatch(getAllNotes());
+            // dispatch({
+            //     type: notesConstants.CREATE_NOTE_SUCCESS,
+            //     payload: res.data,
+            // });
+            dispatch(getAllNotes());
         } else {
             dispatch({
                 type: notesConstants.CREATE_NOTE_FAILED,
@@ -97,16 +97,17 @@ const updateNoteById = (data) => async (dispatch) => {
         });
 
         const { id, title, details } = data;
-        const updateNote = { id, title, details };
+        const updateNote = { title, details };
 
         const res = await api.put(`/note/${id}`, updateNote);
 
         if (res.status === 200) {
-            dispatch({
-                type: notesConstants.UPDATE_NOTE_BY_ID_SUCCESS,
-                payload: res.data,
-            });
-            // dispatch(getAllNotes());
+            // dispatch({
+            //     type: notesConstants.UPDATE_NOTE_BY_ID_SUCCESS,
+            //     payload: res.data,
+            // });
+            console.log('object', res);
+            dispatch(getAllNotes());
         } else {
             dispatch({
                 type: notesConstants.UPDATE_NOTE_BY_ID_FAILED,
@@ -128,14 +129,14 @@ const deleteNoteById = (id) => async (dispatch) => {
             type: notesConstants.DELETE_NOTE_BY_ID_REQUEST,
         });
 
-        const res = await api.put(`/note/${id}`);
+        const res = await api.delete(`/note/${id}`);
 
         if (res.status === 200) {
-            dispatch({
-                type: notesConstants.DELETE_NOTE_BY_ID_SUCCESS,
-                payload: { ...res.data, id },
-            });
-            // dispatch(getAllNotes());
+            // dispatch({
+            //     type: notesConstants.DELETE_NOTE_BY_ID_SUCCESS,
+            //     payload: { ...res.data, id },
+            // });
+            dispatch(getAllNotes());
         } else {
             dispatch({
                 type: notesConstants.DELETE_NOTE_BY_ID_FAILED,
