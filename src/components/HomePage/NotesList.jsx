@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-alert */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import { AddBox, Delete, Edit, Share } from '@material-ui/icons';
@@ -31,18 +33,25 @@ const NotesList = () => {
     const onHandleSubmit = (data) => {
         // console.log(data);
         dispatch(createNote(data));
+        setOpen(false);
     };
 
     const handleDelete = (data) => {
-        // eslint-disable-next-line no-alert
-        // eslint-disable-next-line no-restricted-globals
         const reply = confirm('Are you sure?');
 
         // if (reply === true) dispatch(deleteNoteById());
         console.log({ data, reply });
     };
 
-    console.log(notes.notesData);
+    // notes.notesData?.notes?.map(note )
+
+    //     notes: Array(2)
+    // 0:
+    // created: "2021-06-12 04:04:21.719552+00:00"
+    // details: "test details"
+    // id: 1
+    // last_edit: null
+    // title: "test title"
 
     return (
         <>
@@ -79,11 +88,12 @@ const NotesList = () => {
                         { title: 'Details', field: 'details' },
                         { title: 'Date', field: 'date' },
                     ]}
-                    data={[
-                        { no: '1', title: 'lorem...', details: 'lorem...', date: '12-30-2021' },
-                        { no: '2', title: 'lorem...', details: 'lorem...', date: '12-30-2021' },
-                        { no: '3', title: 'lorem...', details: 'lorem...', date: '12-30-2021' },
-                    ]}
+                    // data={[
+                    //     { no: '1', title: 'lorem...', details: 'lorem...', date: '12-30-2021' },
+                    //     { no: '2', title: 'lorem...', details: 'lorem...', date: '12-30-2021' },
+                    //     { no: '3', title: 'lorem...', details: 'lorem...', date: '12-30-2021' },
+                    // ]}
+                    data={notes.notesData?.notes}
                     options={{
                         exportButton: true,
                     }}

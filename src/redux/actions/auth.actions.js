@@ -24,6 +24,7 @@ const userJwtToken = (data) => async (dispatch) => {
 
             localStorage.setItem('technotesUser', data?.mail);
             localStorage.setItem('technotesJWT', res.data.jwt);
+            localStorage.setItem('tokenError', '');
         } else {
             dispatch({
                 type: authConstants.AUTH_FAILED,
