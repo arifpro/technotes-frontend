@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { getJwtToken } from './auth.actions';
+import userJwtToken from './auth.actions';
 import {
     createNote,
     deleteNoteById,
@@ -17,7 +17,7 @@ import {
 
 export {
     // auth
-    getJwtToken,
+    userJwtToken,
 
     // notes
     createNote,
