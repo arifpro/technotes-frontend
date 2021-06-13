@@ -10,7 +10,7 @@ const initialState = {
 
 const notesReducer = (state = initialState, action) => {
     // console.log(action);
-    console.log(action.payload);
+    // console.log(action.payload);
 
     switch (action.type) {
         // <===================> getAllNotes <===================>
