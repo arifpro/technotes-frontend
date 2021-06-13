@@ -11,7 +11,7 @@ const initialState = {
 
 const sharingReducer = (state = initialState, action) => {
     // console.log(action);
-    console.log(action.payload);
+    // console.log(action.payload);
 
     switch (action.type) {
         // <===================> getAllSharedNotes <===================>
