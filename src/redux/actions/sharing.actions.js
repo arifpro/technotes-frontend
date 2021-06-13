@@ -1,6 +1,34 @@
 import { sharingConstants } from '../actionTypes';
 import api from '../redux.config';
 
+// <===================> GET: mySharedUsers <===================>
+const mySharedUsers = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: sharingConstants.MY_SHARED_USERS_REQUEST,
+        });
+
+        const res = await api.get(`/note/user/shared-by-me`);
+
+        if (res.status === 200) {
+            dispatch({
+                type: sharingConstants.MY_SHARED_USERS_SUCCESS,
+                payload: res.data,
+            });
+        } else {
+            dispatch({
+                type: sharingConstants.MY_SHARED_USERS_FAILED,
+                error: 'unable to get all notes',
+            });
+        }
+    } catch (e) {
+        dispatch({
+            type: sharingConstants.MY_SHARED_USERS_FAILED,
+            error: e,
+        });
+    }
+};
+
 // <===================> GET: getAllSharedNotes <===================>
 const getAllSharedNotes = () => async (dispatch) => {
     try {
@@ -20,6 +48,7 @@ const getAllSharedNotes = () => async (dispatch) => {
                 type: sharingConstants.GET_ALL_SHARED_NOTES_FAILED,
                 error: 'unable to get all shared notes',
             });
+            dispatch(mySharedUsers());
         }
     } catch (e) {
         dispatch({
@@ -77,7 +106,8 @@ const shareNote = (data) => async (dispatch) => {
                 type: sharingConstants.SHARE_NOTE_SUCCESS,
                 payload: res.data,
             });
-            // dispatch(getAllSharedNotes());
+            dispatch(getAllSharedNotes());
+            dispatch(mySharedUsers());
         } else {
             dispatch({
                 type: sharingConstants.SHARE_NOTE_FAILED,
@@ -113,7 +143,8 @@ const updateSharedNoteDetailsBySharingId = (data) => async (dispatch) => {
                 type: sharingConstants.UPDATE_SHARED_NOTE_BY_SHARING_ID_SUCCESS,
                 payload: res.data,
             });
-            // dispatch(getAllSharedNotes());
+            dispatch(getAllSharedNotes());
+            dispatch(mySharedUsers());
         } else {
             dispatch({
                 type: sharingConstants.UPDATE_SHARED_NOTE_BY_SHARING_ID_FAILED,
@@ -123,34 +154,6 @@ const updateSharedNoteDetailsBySharingId = (data) => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: sharingConstants.UPDATE_SHARED_NOTE_BY_SHARING_ID_FAILED,
-            error: e,
-        });
-    }
-};
-
-// <===================> GET: mySharedUsers <===================>
-const mySharedUsers = () => async (dispatch) => {
-    try {
-        dispatch({
-            type: sharingConstants.MY_SHARED_USERS_REQUEST,
-        });
-
-        const res = await api.get(`/note/user/shared-by-me`);
-
-        if (res.status === 200) {
-            dispatch({
-                type: sharingConstants.MY_SHARED_USERS_SUCCESS,
-                payload: res.data,
-            });
-        } else {
-            dispatch({
-                type: sharingConstants.MY_SHARED_USERS_FAILED,
-                error: 'unable to get all notes',
-            });
-        }
-    } catch (e) {
-        dispatch({
-            type: sharingConstants.MY_SHARED_USERS_FAILED,
             error: e,
         });
     }

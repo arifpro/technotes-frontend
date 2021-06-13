@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import Divider from '@material-ui/core/Divider';
-import {AddBox, Delete, Edit, Share, Visibility} from '@material-ui/icons';
+import {AddBox, Delete, Edit, FileCopy, Share, Visibility} from '@material-ui/icons';
 import MaterialTable from 'material-table';
 import {forwardRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -13,6 +13,7 @@ import styles from '../../styles/NotesListStyles.module.scss';
 // import AddNote from './AddNote';
 import CustomModal from './CustomModal';
 import InputNote from './InputNote';
+import ShareNote from './ShareNote';
 import ViewNote from './ViewNote';
 
 const tableIcons = {
@@ -28,10 +29,11 @@ const NotesList = () => {
     const notes = useSelector((state) => state.notes);
     const sharedNotes = useSelector((state) => state.sharedNotes);
 
-    console.log(sharedNotes);
+    // console.log(sharedNotes);
 
     const [open, setOpen] = useState(false);
     const [openView, setOpenView] = useState(false);
+    const [openShare, setOpenShare] = useState(false);
     const [formType, setFormType] = useState('Add');
     const [noteType, setNoteType] = useState('Note');
     const [selectedFormData, setSelectedFormData] = useState(null);
@@ -59,6 +61,11 @@ const NotesList = () => {
     const handleOpenView = (isOpen, rowData) => {
         setOpenView(isOpen);
         dispatch(getNoteDetailsById(rowData?.id));
+    };
+
+    const handleOpenShare = (event, isOpen, rowData) => {
+        event.preventDefault();
+        setOpenShare(isOpen);
     };
 
     return (
@@ -133,7 +140,7 @@ const NotesList = () => {
                                     <Edit htmlColor="#305cba" />
                                 </div>
                             ),
-                            tooltip: 'Preview',
+                            tooltip: 'Edit',
                             onClick: (event, rowData) => {
                                 // console.log(rowData);
                                 setSelectedFormData(rowData);
@@ -147,7 +154,7 @@ const NotesList = () => {
                                     <Delete htmlColor="#305cba" />
                                 </div>
                             ),
-                            tooltip: 'Preview',
+                            tooltip: 'Delete',
                             onClick: (event, rowData) => {
                                 // console.log(rowData);
                                 // setSelectedFormData(rowData);
@@ -162,12 +169,11 @@ const NotesList = () => {
                                     <Share htmlColor="#305cba" />
                                 </div>
                             ),
-                            tooltip: 'Preview',
+                            tooltip: 'Share',
                             onClick: (event, rowData) => {
-                                // console.log(rowData);
+                                console.log(rowData);
                                 setSelectedFormData(rowData);
-                                setFormType('Share');
-                                handleOpen(true);
+                                handleOpenShare(event, true, rowData);
                             },
                         },
                     ]}
@@ -178,9 +184,9 @@ const NotesList = () => {
             <Divider style={{ height: '2px', marginTop: '5rem' }} />
 
 
-            {/* shared list */}
+            {/* shared by me list */}
             <div className={styles.notesList}>
-                <h1 style={{marginBottom: '2rem'}}>Shared Notes List</h1>
+                <h1 style={{marginBottom: '2rem'}}>Shared By Me Notes List</h1>
         
 
                 <MaterialTable
@@ -190,19 +196,37 @@ const NotesList = () => {
                         { title: '#', field: 'no' },
                         { title: 'Title', field: 'title' },
                         { title: 'Details', field: 'details' },
-                        { title: 'Date', field: 'created' },
+                        { title: 'Source Email', field: 'sourceEmail' },
+                        { title: 'Target Email', field: 'targetEmail' },
+                        { title: 'Shared Date', field: 'sharedDate' },
                     ]}
-                    data={sharedNotes.sharedNotesData?.notes?.map((note, i) => {
-                        if (note.details.length > 10) {
-                            return { ...note, details: `${note.details.substring(0, 10)}...`, created: note.created.split(' ')[0], no: i+1 };
-                        }
-
-                        return {...note, created: note.created.split(' ')[0], no: i+1};
-                    })}
+                    data={sharedNotes.sharedNotesData?.models?.map((data, i) => ({
+                            no: i+1 ,
+                            id: data.id,
+                            sharedDate: data.created.split(' ')[0],
+                            title: data.note.title.length > 7 ? `${data.note.title.substring(0, 7)}...` : data.note.title,
+                            details: data.note.details.length > 7 ? `${data.note.details.substring(0, 7)}...` : data.note.details,
+                            sourceEmail: data.source_user.mail,
+                            targetEmail: data.target_user.mail,
+                            noteDetails: data.note,
+                            sourceDetails: data.source_user,
+                            targetDetails: data.target_user,
+                        }))}
                     options={{
                         exportButton: true,
                     }}
                     actions={[
+                        {
+                            icon: () => (
+                                <div>
+                                    <FileCopy htmlColor="#305cba" />
+                                </div>
+                            ),
+                            tooltip: 'Copy',
+                            onClick: (event, rowData) => {
+                                navigator.clipboard.writeText(`https://technotes-api.herokuapp.com/api/v1/note/shared/${rowData.id}`)
+                            },
+                        },
                         {
                             icon: () => (
                                 <div>
@@ -223,7 +247,7 @@ const NotesList = () => {
                                     <Edit htmlColor="#305cba" />
                                 </div>
                             ),
-                            tooltip: 'Preview',
+                            tooltip: 'Edit',
                             onClick: (event, rowData) => {
                                 // console.log(rowData);
                                 setSelectedFormData(rowData);
@@ -254,7 +278,7 @@ const NotesList = () => {
                         { title: 'Last Login', field: 'lastLogin' },
                     ]}
                     data={sharedNotes.mySharedUsers?.models?.map((data, i) => ({
-                        name: data.user.first_name.length > 0 ? `${data.user.first_name  } ${  data.user.last_name}` : '--',
+                        name: data.user.first_name.length > 0 ? `${data.user.first_name  } ${  data.user.last_name}` : '---',
                         mail: data.user.mail,
                         lastLogin: data.user.last_login.split(' ')[0],
                         no: i+1
@@ -262,36 +286,6 @@ const NotesList = () => {
                     options={{
                         exportButton: true,
                     }}
-                    actions={[
-                        {
-                            icon: () => (
-                                <div>
-                                    <Visibility htmlColor="#305cba" />
-                                </div>
-                            ),
-                            tooltip: 'Preview',
-                            onClick: (event, rowData) => {
-                                // console.log(rowData);
-                                setSelectedFormData(rowData);
-                                setNoteType('SharedNote');
-                                handleOpenView(true, rowData);
-                            },
-                        },
-                        {
-                            icon: () => (
-                                <div>
-                                    <Edit htmlColor="#305cba" />
-                                </div>
-                            ),
-                            tooltip: 'Preview',
-                            onClick: (event, rowData) => {
-                                // console.log(rowData);
-                                setSelectedFormData(rowData);
-                                setFormType('Update');
-                                setOpenView(true);
-                            },
-                        },
-                    ]}
                 />
             </div>
 
@@ -310,6 +304,10 @@ const NotesList = () => {
 
             <CustomModal open={openView} handleClose={() => setOpenView(false)}>
                 <ViewNote noteType={noteType} />
+            </CustomModal>
+
+            <CustomModal open={openShare} handleClose={() => setOpenShare(false)}>
+                <ShareNote selectedFormData={selectedFormData} setOpenShare={setOpenShare} />
             </CustomModal>
         </>
     );

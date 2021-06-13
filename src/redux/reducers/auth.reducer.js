@@ -9,7 +9,7 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
     // console.log(action);
-    console.log(action.payload);
+    // console.log(action.payload);
 
     if (action.payload?.error === 'Invalid or Expired JWT') {
         localStorage.setItem('tokenError', 'Invalid or Expired JWT');
