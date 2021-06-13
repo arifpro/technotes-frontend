@@ -2,12 +2,9 @@
 import { TextField } from '@material-ui/core';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Redirect, Route, useHistory } from 'react-router-dom';
-import { push } from 'react-router-redux';
+import { Redirect, Route } from 'react-router-dom';
 import { isAuthenticate } from '../HOC/AdminProtectedRoute';
 import { userJwtToken } from '../redux/actions';
-
-const onPushPress = () => (dispatch) => dispatch(push('/'));
 
 export const CheckRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -31,13 +28,9 @@ const Login = () => {
     const dispatch = useDispatch();
     const { control, handleSubmit } = useForm();
 
-    const history = useHistory();
-
     const onSubmit = (data) => {
         dispatch(userJwtToken(data));
-
-        onPushPress();
-        history.push('/');
+        window.location.reload();
     };
 
     return (
