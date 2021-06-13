@@ -30,7 +30,6 @@ const Login = () => {
 
     const onSubmit = (data) => {
         dispatch(userJwtToken(data));
-        window.location.reload();
     };
 
     return (

@@ -16,6 +16,8 @@ const userJwtToken = (data) => async (dispatch) => {
 
         const res = await api.post(`/auth`, user);
 
+        console.log(res);
+
         if (res.status === 200) {
             dispatch({
                 type: authConstants.AUTH_SUCCESS,
@@ -25,6 +27,7 @@ const userJwtToken = (data) => async (dispatch) => {
             localStorage.setItem('technotesUser', data?.mail);
             localStorage.setItem('technotesJWT', res.data.jwt);
             localStorage.setItem('tokenError', '');
+            window.location.reload();
         } else {
             dispatch({
                 type: authConstants.AUTH_FAILED,
