@@ -19,7 +19,6 @@ function App() {
         if (error && error === 'Invalid or Expired JWT') {
             const mail = localStorage.getItem('technotesUser');
             dispatch(userJwtToken({ mail }));
-            window.location.reload();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
