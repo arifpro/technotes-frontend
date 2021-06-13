@@ -135,7 +135,7 @@ const mySharedUsers = () => async (dispatch) => {
             type: sharingConstants.MY_SHARED_USERS_REQUEST,
         });
 
-        const res = await api.get(`/note/shared-by-me`);
+        const res = await api.get(`/note/user/shared-by-me`);
 
         if (res.status === 200) {
             dispatch({

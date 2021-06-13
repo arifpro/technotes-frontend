@@ -3,8 +3,11 @@ import { TextField } from '@material-ui/core';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Redirect, Route, useHistory } from 'react-router-dom';
+import { push } from 'react-router-redux';
 import { isAuthenticate } from '../HOC/AdminProtectedRoute';
 import { userJwtToken } from '../redux/actions';
+
+const onPushPress = () => (dispatch) => dispatch(push('/'));
 
 export const CheckRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -33,6 +36,7 @@ const Login = () => {
     const onSubmit = (data) => {
         dispatch(userJwtToken(data));
 
+        onPushPress();
         history.push('/');
     };
 
